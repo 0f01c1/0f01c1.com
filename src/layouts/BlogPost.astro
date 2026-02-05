@@ -40,7 +40,7 @@ const stats = readingTime(body);
         <div>
           {
             heroImage && (
-              <img width={1020} height={510} src={heroImage} alt="" />
+              <img width={1020} height={510} src={heroImage} alt="" style="max-width: 100%; margin: 20px 0;" />
             )
           }
         </div>
@@ -54,10 +54,10 @@ const stats = readingTime(body);
 <style is:inline>
     /* Base Styles */
 img {
-    max-width: 100%;
+    max-width: 85%;
     height: auto;
     display: block;
-    margin: 20px 0;
+    margin: 20px auto;
 }
 
 /* Headings */
@@ -128,7 +128,8 @@ th {
 }
 
 /* Lists */
-.footnotes ul, ol {
+article > div:last-of-type ul,
+article > div:last-of-type ol {
     margin-top: 0;
     margin-bottom: 16px;
     padding-left: 20px;
