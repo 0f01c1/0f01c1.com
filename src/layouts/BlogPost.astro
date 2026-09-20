@@ -92,7 +92,16 @@ blockquote {
     margin: 20px 0;
     color: #666;
     background-color: #f9f9f9;
-    @apply dark:bg-neutral-700 text-white border-l-4 border-neutral-500; 
+}
+
+blockquote p {
+    margin: 0;
+}
+
+html.dark blockquote {
+    border-left-color: #737373;
+    background-color: #404040;
+    color: #e5e5e5;
 }
 
 /* Code Blocks and Inline Code */
@@ -124,7 +133,10 @@ th, td {
 
 th {
     background-color: #f4f4f4;
-    @apply dark:bg-neutral-700;
+}
+
+html.dark th {
+    background-color: #404040;
 }
 
 /* Lists */
