@@ -2,14 +2,52 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Tailwind v4 defaults border colour to currentColor; keep the v3 default (gray-200) */
+/*
+ * Site colour palette. Every grey on the site comes from these roles, so
+ * components use e.g. `text-muted` instead of separate light/dark classes.
+ * Hover and active states always move towards `strong`.
+ */
+:root {
+    --page: var(--color-white);           /* Page background */
+    --body: var(--color-neutral-900);     /* Body text */
+    --strong: var(--color-neutral-900);   /* Hover and active states */
+    --secondary: var(--color-neutral-600); /* Secondary links (footer, contents) */
+    --muted: var(--color-neutral-500);    /* Meta text (dates, reading time, tags) */
+    --line: var(--color-neutral-200);     /* Borders and dividers */
+    --surface: var(--color-neutral-100);  /* Buttons, quotes, table headers */
+    --surface-hover: var(--color-neutral-200);
+}
+
+.dark {
+    --page: var(--color-neutral-800);
+    --body: var(--color-neutral-300);
+    --strong: var(--color-neutral-100);
+    --secondary: var(--color-neutral-400);
+    --muted: var(--color-neutral-400);
+    --line: var(--color-neutral-600);
+    --surface: var(--color-neutral-700);
+    --surface-hover: color-mix(in oklab, var(--color-neutral-700) 50%, transparent);
+}
+
+@theme inline {
+    --color-page: var(--page);
+    --color-body: var(--body);
+    --color-strong: var(--strong);
+    --color-secondary: var(--secondary);
+    --color-muted: var(--muted);
+    --color-line: var(--line);
+    --color-surface: var(--surface);
+    --color-surface-hover: var(--surface-hover);
+}
+
+/* Tailwind v4 defaults border colour to currentColor; use the site's line colour instead */
 @layer base {
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+        border-color: var(--line);
     }
 
     /* Tailwind v4 no longer gives buttons a pointer cursor; restore the v3 behaviour */

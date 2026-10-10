@@ -20,14 +20,14 @@ const indent = (depth: number) => depths.indexOf(depth);
 const label = (text: string) => text.replace(/[\p{Extended_Pictographic}️‍]/gu, '').trim();
 
 const linkClass =
-  'block py-1 no-underline hover:underline text-gray-700 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-neutral-200 data-active:font-bold data-active:text-gray-900 dark:data-active:text-neutral-100';
+  'block py-1 no-underline hover:underline text-secondary hover:text-strong data-active:font-bold data-active:text-strong';
 ---
 
 {
   items.length > 0 && (
     <>
       {/* Smaller screens: collapsible box at the top of the post */}
-      <details data-toc class="xl:hidden mb-8 border border-gray-200 dark:border-neutral-600 rounded-lg px-4 py-2">
+      <details data-toc class="xl:hidden mb-8 border border-line rounded-lg px-4 py-2">
         <summary class="cursor-pointer font-medium">Contents</summary>
         <ul class="mt-2 text-sm">
           {items.map((heading) => (
@@ -48,7 +48,7 @@ const linkClass =
       <nav data-toc aria-label="Contents" class="hidden xl:block absolute inset-y-0 left-full ml-12 w-52 text-sm">
         <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
           <p class="mb-2 font-medium">Contents</p>
-          <ul class="border-l border-gray-200 dark:border-neutral-600 pl-3">
+          <ul class="border-l border-line pl-3">
             {items.map((heading) => (
               <li style={`padding-left: ${indent(heading.depth)}rem`}>
                 <a href={`#${heading.slug}`} data-toc-link={heading.slug} class={linkClass}>

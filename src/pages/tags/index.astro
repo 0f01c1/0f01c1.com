@@ -32,7 +32,7 @@ const tagCounts = Array.from(tagCountMap, ([name, count]) => ({ name, count }))
           {tagCounts.map(({name, count}) => (
               <li>
                   <a href={`/tags/${name}`} class="hover:underline">
-                      #{name} <span class="text-gray-500 dark:text-neutral-400">- {count} {count === 1 ? 'post' : 'posts'}</span>
+                      #{name} <span class="text-muted">- {count} {count === 1 ? 'post' : 'posts'}</span>
                   </a>
               </li>
           ))}

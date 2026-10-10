@@ -19,8 +19,8 @@ const stats = readingTime(post.body ?? '');
     </a>
     <div class="flex items-center gap-2">
       <FormattedDate date={post.data.pubDate} />
-      <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">/</span>
-      <span class="text-gray-500 dark:text-gray-400 text-sm font-medium tracking-wide">{stats.text}</span>
+      <span class="text-muted text-sm font-medium">/</span>
+      <span class="text-muted text-sm font-medium tracking-wide">{stats.text}</span>
     </div>
     <div class="flex gap-2">
       {post.data.tags?.map((tag) => {
@@ -32,7 +32,7 @@ const stats = readingTime(post.body ?? '');
     <img
       src={post.data.heroImage}
       alt=""
-      class="w-40 h-24 bg-contain border border-gray-200"
+      class="w-40 h-24 bg-contain border border-line"
     />
   </a>
 </div>

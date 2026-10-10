@@ -25,7 +25,7 @@ const stats = readingTime(body);
         </h1>
         <div>
           <FormattedDate date={pubDate} />
-          <span class="text-gray-500 dark:text-gray-400 text-sm font-medium tracking-wide"> / {stats.text}</span>
+          <span class="text-muted text-sm font-medium tracking-wide"> / {stats.text}</span>
         </div>
         <div class="mb-4">
           {
@@ -67,7 +67,6 @@ img {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-    color: var(--grey-900);
     margin-top: 24px;
     margin-bottom: 16px;
     font-weight: bold;
@@ -92,21 +91,15 @@ p {
 
 /* Blockquotes */
 blockquote {
-    border-left: 4px solid #ccc;
+    border-left: 4px solid var(--line);
     padding: 10px 20px;
     margin: 20px 0;
-    color: #666;
-    background-color: #f9f9f9;
+    color: var(--body);
+    background-color: var(--surface);
 }
 
 blockquote p {
     margin: 0;
-}
-
-html.dark blockquote {
-    border-left-color: #737373;
-    background-color: #404040;
-    color: #e5e5e5;
 }
 
 /* Code Blocks and Inline Code */
@@ -137,15 +130,11 @@ table {
 
 th, td {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--line);
 }
 
 th {
-    background-color: #f4f4f4;
-}
-
-html.dark th {
-    background-color: #404040;
+    background-color: var(--surface);
 }
 
 /* Lists */
@@ -191,7 +180,7 @@ article .footnotes li p {
 
 /* Special HTML Tags */
 abbr {
-    border-bottom: 1px dotted #666;
+    border-bottom: 1px dotted var(--muted);
     cursor: help;
 }
 
