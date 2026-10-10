@@ -10,21 +10,23 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.0",
-    "@astrojs/tailwind": "^6.0.2",
-    "@astropub/icons": "^0.2.0",
-    "astro": "^5.16.6",
-    "astro-expressive-code": "^0.41.3",
-    "astro-iconify": "^1.2.0",
-    "astro-navbar": "^2.3.2",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@iconify-json/codicon": "^1.2.74",
+    "@iconify-json/material-symbols": "^1.2.95",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/radix-icons": "^1.2.6",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.8",
+    "astro-expressive-code": "^0.44.2",
+    "astro-icon": "^1.2.0",
+    "astro-navbar": "^2.4.0",
     "clsx": "^2.1.1",
     "reading-time": "^1.5.0",
-    "remark-gfm": "^4.0.1",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
   }
 }

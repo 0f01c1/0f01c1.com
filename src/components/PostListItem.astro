@@ -9,12 +9,12 @@ type Props = {
 };
 
 const { post } = Astro.props;
-const stats = readingTime(post.body);
+const stats = readingTime(post.body ?? '');
 ---
 
 <div class="flex gap-2 justify-between border-b pb-4">
   <div class="flex flex-col gap-2">
-    <a class="font-bold text-lg" href={`/blog/${post.slug}`}>
+    <a class="font-bold text-lg" href={`/blog/${post.id}`}>
       {post.data.title}
     </a>
     <div class="flex items-center gap-2">
@@ -28,7 +28,7 @@ const stats = readingTime(post.body);
       })}
     </div>
   </div>
-  <a href={`/blog/${post.slug}`}>
+  <a href={`/blog/${post.id}`}>
     <img
       src={post.data.heroImage}
       alt=""
