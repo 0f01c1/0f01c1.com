@@ -28,5 +28,10 @@
     "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "@expressive-code/core": {
+      "postcss-nested": "^8.0.1"
+    }
   }
 }
