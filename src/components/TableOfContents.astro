@@ -1,0 +1,122 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+type Props = {
+  headings: MarkdownHeading[];
+  // Deepest heading level to include (e.g. 3 = h1-h3)
+  maxDepth?: number;
+};
+
+const { headings, maxDepth = 3 } = Astro.props;
+
+// Skip the hidden heading the Markdown processor adds above the footnotes list
+const items = headings.filter((heading) => heading.depth <= maxDepth && heading.slug !== 'footnote-label');
+
+// Indent by rank among the heading levels used, so h1 -> h3 is one step, not two
+const depths = [...new Set(items.map((heading) => heading.depth))].sort();
+const indent = (depth: number) => depths.indexOf(depth);
+
+// Show heading text without emojis (e.g. "🔐 User Mode vs Kernel Mode" -> "User Mode vs Kernel Mode")
+const label = (text: string) => text.replace(/[\p{Extended_Pictographic}️‍]/gu, '').trim();
+
+const linkClass =
+  'block py-1 no-underline hover:underline text-gray-700 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-neutral-200 data-active:font-bold data-active:text-gray-900 dark:data-active:text-neutral-100';
+---
+
+{
+  items.length > 0 && (
+    <>
+      {/* Smaller screens: collapsible box at the top of the post */}
+      <details data-toc class="xl:hidden mb-8 border border-gray-200 dark:border-neutral-600 rounded-lg px-4 py-2">
+        <summary class="cursor-pointer font-medium">Contents</summary>
+        <ul class="mt-2 text-sm">
+          {items.map((heading) => (
+            <li style={`padding-left: ${indent(heading.depth)}rem`}>
+              <a href={`#${heading.slug}`} data-toc-link={heading.slug} class={linkClass}>
+                {label(heading.text)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+
+      {/*
+        Wide screens: sits in the right-hand margin, level with the top of the
+        nearest positioned ancestor (the post's <article class="relative">),
+        then sticks near the top of the screen while scrolling through the post.
+      */}
+      <nav data-toc aria-label="Contents" class="hidden xl:block absolute inset-y-0 left-full ml-12 w-52 text-sm">
+        <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+          <p class="mb-2 font-medium">Contents</p>
+          <ul class="border-l border-gray-200 dark:border-neutral-600 pl-3">
+            {items.map((heading) => (
+              <li style={`padding-left: ${indent(heading.depth)}rem`}>
+                <a href={`#${heading.slug}`} data-toc-link={heading.slug} class={linkClass}>
+                  {label(heading.text)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+    </>
+  )
+}
+
+<script>
+  // A heading counts as "current" once its top passes this far down the viewport
+  const ACTIVE_OFFSET = 120;
+  const SCROLL_MARGIN = '1.5rem';
+
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  const slugs = [...new Set(links.map((link) => link.dataset.tocLink!))];
+  const targets = slugs
+    .map((slug) => document.getElementById(slug))
+    .filter((el): el is HTMLElement => el !== null);
+
+  // Smooth scroll to the heading, leaving a little space above it
+  targets.forEach((target) => (target.style.scrollMarginTop = SCROLL_MARGIN));
+  links.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const target = document.getElementById(link.dataset.tocLink!);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', `#${target.id}`);
+    });
+  });
+
+  // Highlight the last heading scrolled past (or the final one at the bottom of the page)
+  let current: string | undefined;
+  const update = () => {
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    let active: string | undefined;
+    if (atBottom) {
+      active = targets[targets.length - 1]?.id;
+    } else {
+      for (const target of targets) {
+        if (target.getBoundingClientRect().top > ACTIVE_OFFSET) break;
+        active = target.id;
+      }
+    }
+    if (active === current) return;
+    current = active;
+    links.forEach((link) => link.toggleAttribute('data-active', link.dataset.tocLink === active));
+  };
+
+  let scheduled = false;
+  const onScroll = () => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      update();
+    });
+  };
+
+  if (targets.length > 0) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+</script>

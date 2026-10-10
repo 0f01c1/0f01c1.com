@@ -1,22 +1,25 @@
 ---
+import type { MarkdownHeading } from "astro";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import ScrollToTopButton from "../components/ScrollToTopButton.astro";
 import TagLink from "../components/TagLink.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import readingTime from "reading-time";
 import { formatTitle } from "../consts";
 
 type Props = CollectionEntry<"blog">["data"] & {
   body: string;
+  headings?: MarkdownHeading[];
 };
 
-const { title, description, pubDate, heroImage, tags, body } = Astro.props;
+const { title, description, pubDate, heroImage, tags, body, headings } = Astro.props;
 const stats = readingTime(body);
 ---
 
 <BaseLayout title={formatTitle(title)} description={description}>
-  <article>
+  <article class="relative">
         <h1 id="post-title" class="text-5xl mb-2">
           {title}
         </h1>
@@ -44,6 +47,7 @@ const stats = readingTime(body);
             )
           }
         </div>
+        {headings && <TableOfContents headings={headings} />}
         <div class="mt-10">
           <slot />
         </div>
